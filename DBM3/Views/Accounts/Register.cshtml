@@ -1,0 +1,62 @@
+﻿@{
+    ViewData["Title"] = "Register";
+}
+
+<div class="container d-flex align-items-center justify-content-center vh-100">
+    <div class="card shadow-lg p-4 rounded register-card" style="width: 500px;">
+        <div class="card-header bg-success text-white text-center">
+            <h2>Register</h2>
+        </div>
+        <div class="card-body">
+            <form asp-action="Register" asp-controller="Accounts" method="post">
+                <div class="form-group mb-3">
+                    <label class="form-label fw-bold">Role</label>
+                    <select class="form-control" name="Role" required>
+                        <option value="Learner">Learner</option>
+                        <option value="Instructor">Instructor</option>
+                        <option value="Admin">Admin</option>
+                    </select>
+                </div>
+                <div class="form-group mb-3">
+                    <label class="form-label fw-bold">First Name</label>
+                    <input type="text" name="FirstName" class="form-control" placeholder="Enter your first name" required />
+                </div>
+                <div class="form-group mb-3">
+                    <label class="form-label fw-bold">Last Name</label>
+                    <input type="text" name="LastName" class="form-control" placeholder="Enter your last name" required />
+                </div>
+                <div class="form-group mb-3">
+                    <label class="form-label fw-bold">Email</label>
+                    <input type="email" name="Email" class="form-control" placeholder="Enter your email" required />
+                </div>
+                <div class="form-group mb-3">
+                    <label class="form-label fw-bold">Password</label>
+                    <input type="password" name="Password" class="form-control" placeholder="Enter your password" required />
+                </div>
+                <button type="submit" class="btn btn-success w-100 shadow-sm">Register</button>
+                <p class="text-center mt-3">
+                    Already have an account? <a asp-controller="Accounts" asp-action="Login" class="text-primary fw-bold">Login here</a>
+                </p>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    <style>
+        body {
+            background: linear-gradient(to bottom, #ffffff, #e9f7ff);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .register-card {
+            border: none;
+            background-color: #f9f9f9;
+        }
+
+        .card-header h2 {
+            margin: 0;
+            font-weight: bold;
+        }
+    </style>
+}

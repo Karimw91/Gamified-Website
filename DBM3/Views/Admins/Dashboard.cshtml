@@ -1,0 +1,95 @@
+﻿@model DBM3.Models.AdminDashboardViewModel
+@{
+    ViewData["Title"] = "Admin Dashboard";
+}
+
+<div class="dashboard-container">
+    <h1 class="text-center mb-4">Admin Dashboard</h1>
+
+    <!-- Display Warning Message -->
+    @if (TempData["WarningMessage"] != null)
+    {
+        <div class="alert alert-warning mt-3">@TempData["WarningMessage"]</div>
+    }
+
+    <!-- Summary Stats -->
+    <div class="row dashboard-stats">
+        <div class="col-md-4 stat-card bg-primary text-white">
+            <h4>Total Learners</h4>
+            <p class="stat-value">@Model.TotalLearners</p>
+        </div>
+        <div class="col-md-4 stat-card bg-success text-white">
+            <h4>Total Instructors</h4>
+            <p class="stat-value">@Model.TotalInstructors</p>
+        </div>
+        <div class="col-md-4 stat-card bg-info text-white">
+            <h4>Total Courses</h4>
+            <p class="stat-value">@Model.TotalCourses</p>
+        </div>
+    </div>
+
+    <!-- Manage Users -->
+    <div class="mt-4">
+        <a href="@Url.Action("ManageUsers", "Admins")" class="btn btn-primary">Manage Users</a>
+    </div>
+
+    <!-- Learners List with Single Buttons -->
+    <h3 class="mt-5">Learners</h3>
+    @foreach (var learner in Model.Learners)
+    {
+        <div class="mb-2 d-flex align-items-center justify-content-between">
+            <span>@learner.FirstName @learner.LastName</span>
+            <div>
+                <button class="btn btn-info btn-sm"
+                        onclick="location.href='@Url.Action("ViewPersonalizationProfile", "Admins", new { learnerId = learner.LearnerId })'">
+                    View Personalization Profile
+                </button>
+                <form asp-action="RemovePersonalizationProfile" asp-controller="Admins" method="post">
+                    <input type="hidden" name="learnerId" value="@learner.LearnerId" />
+                    <button type="submit" class="btn btn-danger btn-sm"
+                            onclick="return confirm('Are you sure you want to remove this learner\'s profile?')">
+                        Remove Personalization Profile
+                    </button>
+                </form>
+            </div>
+        </div>
+    }
+
+    <!-- Notifications -->
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success mt-3">@TempData["SuccessMessage"]</div>
+    }
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger mt-3">@TempData["ErrorMessage"]</div>
+    }
+</div>
+
+@section Styles {
+    <style>
+        .dashboard-container {
+            background-color: #fff;
+            padding: 30px;
+            margin-top: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-card {
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .stat-value {
+            font-size: 1.8em;
+            font-weight: bold;
+        }
+
+        .btn {
+            margin-right: 5px;
+        }
+    </style>
+}

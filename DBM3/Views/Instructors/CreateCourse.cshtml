@@ -1,0 +1,12 @@
+﻿
+@{
+    ViewData["Title"] = "CreateCourse";
+}
+
+<h1>Create New Course</h1>
+<form asp-action="CreateCourse" method="post">
+    <input type="text" name="Title" placeholder="Course Title" required />
+    <textarea name="Description" placeholder="Course Description" required></textarea>
+    <button type="submit" class="btn btn-success">Create</button>
+</form>
+

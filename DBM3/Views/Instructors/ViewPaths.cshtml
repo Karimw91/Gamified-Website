@@ -1,0 +1,25 @@
+﻿@model List<DBM3.Models.LearningPathViewModel>
+@{
+    ViewData["Title"] = "Learning Paths";
+}
+
+<h1>Structured Learning Paths</h1>
+<a class="btn btn-primary" asp-action="AddPath" asp-route-instructorId="@ViewBag.InstructorId">Create New Path</a>
+
+<table class="table mt-3">
+    <thead>
+        <tr>
+            <th>Description</th>
+            <th>Created At</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var path in Model)
+        {
+            <tr>
+                <td>@path.Description</td>
+                <td>@path.CreatedAt.ToShortDateString()</td>
+            </tr>
+        }
+    </tbody>
+</table>

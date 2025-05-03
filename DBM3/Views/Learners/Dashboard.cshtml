@@ -1,0 +1,186 @@
+﻿@model DBM3.Models.LearnerDashboardViewModel
+@{
+    ViewData["Title"] = "Learner Dashboard";
+}
+
+<div class="dashboard-container">
+    <!-- Header -->
+    <div class="dashboard-header text-center mb-4">
+        <h1 class="dashboard-title">Welcome to Your Dashboard</h1>
+        <p class="dashboard-subtitle">Manage your progress, enrollments, and profile all in one place.</p>
+    </div>
+
+    <!-- Alert Messages -->
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            @TempData["ErrorMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["SuccessMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <!-- Summary Cards -->
+    <div class="row dashboard-stats">
+        <div class="col-md-6">
+            <div class="stat-card bg-success text-white shadow-sm">
+                <h4>Completed Courses</h4>
+                <p class="stat-value">@Model.CompletedCourses</p>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="stat-card bg-info text-white shadow-sm">
+                <h4>Current Course</h4>
+                <p class="stat-value">@Model.CurrentCourse</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notifications Section -->
+    <div class="notifications-section mt-4 shadow-sm p-3 rounded">
+        <h3>Notifications</h3>
+        @if (Model.Notifications.Any())
+        {
+            <ul class="list-group">
+                @foreach (var notification in Model.Notifications)
+                {
+                    <li class="list-group-item">@notification</li>
+                }
+            </ul>
+        }
+        else
+        {
+            <p class="text-muted text-center">No new notifications.</p>
+        }
+    </div>
+
+    <!-- Dashboard Actions -->
+    <div class="dashboard-actions text-center mt-5">
+        <h3>Quick Actions</h3>
+        <div class="btn-group mt-3" role="group" aria-label="Quick Actions">
+            <button class="btn btn-outline-primary"
+                    onclick="location.href='@Url.Action("ViewPersonalizationProfile", "Learners", new { learnerId = Model.LearnerId })'">
+                View Personalization Profile
+            </button>
+            <button class="btn btn-outline-danger"
+                    onclick="if(confirm('Are you sure you want to remove your personalization profile?')) location.href='@Url.Action("RemovePersonalizationProfile", "Learners", new { learnerId = Model.LearnerId })'">
+                Remove Personalization Profile
+            </button>
+            <button class="btn btn-outline-secondary"
+                    onclick="location.href='@Url.Action("Index", "Assessments")'">
+                View Assessments
+            </button>
+            <button class="btn btn-outline-info"
+                    onclick="location.href='@Url.Action("Profile", "Learners", new { id = Model.LearnerId })'">
+                View Profile
+            </button>
+            <button class="btn btn-outline-success"
+                    onclick="location.href='@Url.Action("EnrolledCourses", "Learners", new { learnerId = Model.LearnerId })'">
+                View Enrolled Courses
+            </button>
+
+        </div>
+    </div>
+
+    <!-- Enroll in a Course Section -->
+    <div class="mt-5 enroll-section shadow-sm p-4 rounded">
+        <h3 class="text-center mb-3">Enroll in a Course</h3>
+        <form asp-action="EnrollInCourse" method="post" class="text-center">
+            <div class="form-row">
+                <div class="form-group col-md-6 mb-3">
+                    <label for="LearnerId">Learner ID</label>
+                    <input type="number" id="LearnerId" name="LearnerId" class="form-control" placeholder="Enter Learner ID" required />
+                </div>
+                <div class="form-group col-md-6 mb-3">
+                    <label for="CourseId">Course ID</label>
+                    <input type="number" id="CourseId" name="CourseId" class="form-control" placeholder="Enter Course ID" required />
+                </div>
+            </div>
+            <button type="submit" class="btn btn-success btn-lg px-4">Enroll</button>
+        </form>
+    </div>
+</div>
+
+@section Styles {
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f4f8;
+            color: #333;
+        }
+
+        .dashboard-container {
+            background-color: #fff;
+            padding: 30px;
+            margin: 30px auto;
+            max-width: 1000px;
+            border-radius: 12px;
+            box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .dashboard-header {
+            margin-bottom: 20px;
+        }
+
+        .dashboard-title {
+            color: #007bff;
+            font-size: 2.5em;
+            font-weight: bold;
+        }
+
+        .dashboard-subtitle {
+            font-size: 1.1em;
+            color: #666;
+        }
+
+        .stat-card {
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            margin-bottom: 20px;
+            transition: transform 0.3s ease-in-out;
+        }
+
+            .stat-card:hover {
+                transform: translateY(-5px);
+            }
+
+        .stat-value {
+            font-size: 2em;
+            font-weight: bold;
+        }
+
+        .notifications-section {
+            background-color: #f9f9f9;
+            border-radius: 8px;
+        }
+
+        .enroll-section {
+            background-color: #f9f9f9;
+            border-radius: 8px;
+        }
+
+        .btn-group .btn {
+            margin: 5px;
+            border-radius: 30px;
+        }
+
+        .btn-outline-primary:hover,
+        .btn-outline-success:hover,
+        .btn-outline-danger:hover,
+        .btn-outline-info:hover {
+            transform: scale(1.05);
+        }
+
+        h3 {
+            color: #444;
+            font-weight: bold;
+        }
+    </style>
+}

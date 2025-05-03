@@ -1,0 +1,25 @@
+﻿@model DBM3.Models.LearningGoalViewModel
+@{
+    ViewData["Title"] = "Add Learning Goal";
+}
+
+<h1>Add New Goal</h1>
+
+<form asp-action="AddGoal" method="post">
+    <input type="hidden" name="learnerId" value="@ViewBag.LearnerId" />
+
+    <div class="form-group">
+        <label>Description</label>
+        <input asp-for="Description" class="form-control" required />
+    </div>
+    <div class="form-group">
+        <label>Status</label>
+        <input asp-for="Status" class="form-control" required />
+    </div>
+    <div class="form-group">
+        <label>Deadline</label>
+        <input asp-for="Deadline" class="form-control" type="date" required />
+    </div>
+    <button type="submit" class="btn btn-success">Save Goal</button>
+    <a asp-action="ViewGoals" asp-route-learnerId="@ViewBag.LearnerId" class="btn btn-secondary">Back</a>
+</form>

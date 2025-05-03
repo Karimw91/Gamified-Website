@@ -1,0 +1,36 @@
+﻿@model List<DBM3.Models.LearningGoalViewModel>
+@{
+    ViewData["Title"] = "Learning Goals";
+}
+
+<h1>My Learning Goals</h1>
+
+<a class="btn btn-primary" asp-action="AddGoal" asp-route-learnerId="@ViewBag.LearnerId">Add New Goal</a>
+
+<table class="table mt-3">
+    <thead>
+        <tr>
+            <th>Description</th>
+            <th>Status</th>
+            <th>Deadline</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var goal in Model)
+        {
+            <tr>
+                <td>@goal.Description</td>
+                <td>@goal.Status</td>
+                <td>@goal.Deadline.ToShortDateString()</td>
+                <td>
+                    <form asp-action="DeleteGoal" method="post">
+                        <input type="hidden" name="goalId" value="@goal.GoalId" />
+                        <input type="hidden" name="learnerId" value="@ViewBag.LearnerId" />
+                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

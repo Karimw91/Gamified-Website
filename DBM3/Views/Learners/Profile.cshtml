@@ -1,0 +1,174 @@
+﻿@model DBM3.Models.LearnerProfileViewModel
+
+@{
+    ViewData["Title"] = "Profile";
+}
+
+<div class="profile-container">
+    <!-- Header Section -->
+    <div class="profile-header">
+        <h1>My Profile</h1>
+        <p class="subtitle">Manage your personal information and learning goals</p>
+    </div>
+
+    <!-- Profile Information -->
+    <div class="profile-card shadow">
+        <h3 class="section-title">Profile Information</h3>
+        <ul class="profile-details">
+            <li><strong>Name:</strong> @Model.Learner.FirstName @Model.Learner.LastName</li>
+            <li><strong>Email:</strong> @Model.Learner.Email</li>
+            <li><strong>Password:</strong> @Model.Learner.Password</li>
+            <li><strong>Country:</strong> @Model.Learner.Country</li>
+            <li><strong>Cultural Background:</strong> @Model.Learner.CulturalBackground</li>
+            <li><strong>Gender:</strong> @Model.Learner.Gender</li>
+            <li><strong>Date of Birth:</strong> @Model.Learner.BirthDate?.ToString("yyyy-MM-dd")</li>
+        </ul>
+
+        <div class="profile-actions">
+            <button class="btn btn-warning"
+                    onclick="location.href='@Url.Action("EditProfile", "Learners", new { id = Model.Learner.LearnerId })'">
+                Edit My Profile
+            </button>
+            <form asp-action="DeleteConfirmed" asp-controller="Learners" method="post"
+                  onsubmit="return confirm('Are you sure you want to delete your profile?');" style="display:inline;">
+                <input type="hidden" name="id" value="@Model.Learner.LearnerId" />
+                <button type="submit" class="btn btn-danger">Delete My Profile</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Learning Goals Section -->
+    <div class="learning-goals shadow">
+        <h3 class="section-title">Learning Goals</h3>
+        @if (Model.Goals.Any())
+        {
+            <ul>
+                @foreach (var goal in Model.Goals)
+                {
+                    <li>
+                        <span>@goal.Description</span>
+                        <small>(Status: @goal.Status, Deadline: @goal.Deadline.ToString("yyyy-MM-dd"))</small>
+                        <form method="post" asp-action="RemoveGoal" asp-route-learnerId="@Model.Learner.LearnerId" asp-route-goalId="@goal.GoalId" style="display:inline;">
+                            <button type="submit" class="btn btn-danger btn-sm">Remove</button>
+                        </form>
+                    </li>
+                }
+            </ul>
+        }
+        else
+        {
+            <p class="no-goals">You have no goals added yet.</p>
+        }
+
+        <!-- Add Goal Form -->
+        <h4>Add a New Goal</h4>
+        <form method="post" asp-action="AddGoal" asp-route-learnerId="@Model.Learner.LearnerId" class="add-goal-form">
+            <div class="form-group">
+                <label for="description">Goal Description</label>
+                <input type="text" name="description" class="form-control" placeholder="E.g., Complete Machine Learning Course" required />
+            </div>
+            <div class="form-group">
+                <label for="status">Status</label>
+                <select name="status" class="form-control">
+                    <option value="Not Started">Not Started</option>
+                    <option value="In Progress">In Progress</option>
+                    <option value="Completed">Completed</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="deadline">Deadline</label>
+                <input type="date" name="deadline" class="form-control" required />
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Add Goal</button>
+        </form>
+    </div>
+
+    <!-- Navigation Buttons -->
+    <div class="navigation-buttons">
+        <button class="btn btn-info" onclick="location.href='@Url.Action("ViewLearningPaths", "Learners", new { learnerId = Model.Learner.LearnerId })'">
+            View Learning Paths
+        </button>
+        <button class="btn btn-secondary" onclick="location.href='@Url.Action("Dashboard", "Learners", new { id = Model.Learner.LearnerId })'">
+            Back to Dashboard
+        </button>
+    </div>
+</div>
+
+@section Styles {
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f4f8;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        .profile-container {
+            max-width: 800px;
+            margin: 30px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #007bff;
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+            color: #444;
+        }
+
+        .profile-details li,
+        .learning-goals li {
+            margin: 8px 0;
+            padding: 5px;
+            list-style: none;
+            border-bottom: 1px solid #eee;
+        }
+
+        .no-goals {
+            color: #888;
+            text-align: center;
+            font-style: italic;
+        }
+
+        .profile-actions,
+        .navigation-buttons {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .btn {
+            margin: 5px;
+            border-radius: 20px;
+        }
+
+        .add-goal-form {
+            margin-top: 15px;
+        }
+
+        .shadow {
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+        }
+
+        .profile-card,
+        .learning-goals {
+            margin-bottom: 20px;
+        }
+
+            .profile-card ul {
+                padding: 0;
+            }
+    </style>
+}

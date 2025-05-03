@@ -1,0 +1,87 @@
+﻿@model DBM3.Models.InstructorDashboardViewModel
+@{
+    ViewData["Title"] = "Instructor Dashboard";
+}
+
+
+<div class="dashboard-container">
+    <h1>Welcome, @Model.Name</h1>
+    <p>Email: @Model.Email</p>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success" role="alert">
+            @TempData["SuccessMessage"]
+        </div>
+    }
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger" role="alert">
+            @TempData["ErrorMessage"]
+        </div>
+    }
+
+    <h3>Courses Taught</h3>
+    <ul>
+        @foreach (var course in Model.CoursesTaught)
+        {
+            <li>@course.Title</li>
+        }
+    </ul>
+
+    <h3>Enroll a Learner in a Course</h3>
+    <form method="post" asp-action="EnrollLearnerInCourse" asp-controller="Instructors">
+        <div class="form-group">
+            <label for="LearnerId">Learner ID</label>
+            <input type="number" id="LearnerId" name="LearnerId" class="form-control" required />
+        </div>
+        <div class="form-group">
+            <label for="CourseId">Course ID</label>
+            <input type="number" id="CourseId" name="CourseId" class="form-control" required />
+        </div>
+        <button type="submit" class="btn btn-primary">Enroll Learner</button>
+    </form>
+
+    <h3>Manage Learning Paths</h3>
+    <button class="btn btn-primary"
+            onclick="location.href='@Url.Action("CreateLearningPath", "Instructors", new { instructorId = Model.InstructorId })'">
+        Create Learning Path
+    </button>
+
+
+    <button class="btn btn-info"
+            onclick="location.href='@Url.Action("EditProfile", "Instructors", new { id = Model.InstructorId })'">
+        Edit Profile
+    </button>
+
+    <!-- Button to View Learning Activities -->
+    <button class="btn btn-success"
+            onclick="location.href='@Url.Action("Index", "LearningActivities")'">
+        View Learning Activities
+    </button>
+
+
+    <button class="btn btn-secondary" onclick="location.href='@Url.Action("Index", "Courses")'">View All Courses</button>
+
+
+
+@section Styles {
+    <style>
+        .dashboard-container {
+            background-color: #fff;
+            padding: 30px;
+            margin-top: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #007bff;
+        }
+
+<!-- New Button to Navigate to Courses -->
+        .btn {
+            margin-top: 10px;
+        }
+    </style>
+}

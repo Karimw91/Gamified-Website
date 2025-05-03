@@ -1,0 +1,64 @@
+﻿@model List<DBM3.Models.PersonalizationProfile>
+
+@{
+    ViewData["Title"] = "Personalization Profile";
+}
+
+<h1>Personalization Profile</h1>
+
+@if (Model.Count > 0)
+{
+    @foreach (var profile in Model)
+    {
+        <div class="profile-card">
+            <h3>Profile ID: @profile.ProfileId</h3>
+            <p><strong>Preferred Content Type:</strong> @profile.PreferredContentType</p>
+            <p><strong>Emotional State:</strong> @profile.EmotionalState</p>
+            <p><strong>Personality Type:</strong> @profile.PersonalityType</p>
+
+            <h4>Health Conditions:</h4>
+            @if (profile.HealthConditions.Any())
+            {
+                <ul>
+                    @foreach (var condition in profile.HealthConditions)
+                    {
+                        <li>@condition.Condition</li>
+                    }
+                </ul>
+            }
+            else
+            {
+                <p>No health conditions recorded.</p>
+            }
+        </div>
+    }
+}
+else
+{
+    <p>No personalization profiles available.</p>
+}
+
+<div class="actions">
+    <a href="@Url.Action("RemovePersonalizationProfile", "Learners", new { learnerId = Model.First().LearnerId })" class="btn btn-danger">Remove Personalization Profile</a>
+    <a href="@Url.Action("Dashboard", "Learners", new { id = Model.First().LearnerId })" class="btn btn-secondary">Back to Dashboard</a>
+</div>
+
+@section Styles {
+    <style>
+        .profile-card {
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+
+        .profile-card h3 {
+            margin-top: 0;
+        }
+
+        .actions a {
+            margin-right: 10px;
+        }
+    </style>
+}

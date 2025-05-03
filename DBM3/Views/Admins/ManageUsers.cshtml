@@ -1,0 +1,29 @@
+﻿<h2>Learners</h2>
+<ul>
+    @foreach (var learner in Model.Learners)
+    {
+        <li>
+            @learner.FirstName @learner.LastName
+            <form asp-action="DeleteUser" asp-controller="Admins" method="post" style="display:inline;">
+                <input type="hidden" name="id" value="@learner.LearnerId" />
+                <input type="hidden" name="role" value="Learner" />
+                <button type="submit" class="btn btn-danger">Delete</button>
+            </form>
+        </li>
+    }
+</ul>
+
+<h2>Instructors</h2>
+<ul>
+    @foreach (var instructor in Model.Instructors)
+    {
+        <li>
+            @instructor.FirstName @instructor.LastName
+            <form asp-action="DeleteUser" asp-controller="Admins" method="post" style="display:inline;">
+                <input type="hidden" name="id" value="@instructor.InstructorId" />
+                <input type="hidden" name="role" value="Instructor" />
+                <button type="submit" class="btn btn-danger">Delete</button>
+            </form>
+        </li>
+    }
+</ul>

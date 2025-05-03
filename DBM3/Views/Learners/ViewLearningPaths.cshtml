@@ -1,0 +1,109 @@
+﻿@model IEnumerable<DBM3.Models.LearningPathViewModel>
+
+@{
+    ViewData["Title"] = "Learning Paths";
+}
+
+<div class="learning-paths-container">
+    <div class="header-section text-center mb-4">
+        <h1 class="display-5 text-primary fw-bold">Your Learning Paths</h1>
+        <p class="text-muted">Track your learning progress, customized content, and adaptive rules.</p>
+    </div>
+
+    <div class="table-responsive shadow-sm rounded">
+        <table class="table table-hover table-striped">
+            <thead class="table-dark">
+                <tr>
+                    <th class="text-center">Path ID</th>
+                    <th class="text-center">Completion Status</th>
+                    <th>Custom Content</th>
+                    <th>Adaptive Rules</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var path in Model)
+                {
+                    <tr>
+                        <td class="text-center">@path.PathId</td>
+                        <td class="text-center">
+                            @if (path.CompletionStatus == "Completed")
+                            {
+                                <span class="badge bg-success">Completed</span>
+                            }
+                            else if (path.CompletionStatus == "In Progress")
+                            {
+                                <span class="badge bg-warning text-dark">In Progress</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-secondary">Not Started</span>
+                            }
+                        </td>
+                        <td>@path.CustomContent</td>
+                        <td>@path.AdaptiveRules</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <div class="text-center mt-4">
+        <a class="btn btn-outline-secondary btn-lg shadow-sm" href="@Url.Action("Profile", "Learners", new { id = ViewBag.LearnerId })">
+            <i class="bi bi-arrow-left-circle"></i> Back to Profile
+        </a>
+    </div>
+</div>
+
+@section Styles {
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(to bottom, #ffffff, #f0f4f8);
+            color: #333;
+        }
+
+        .learning-paths-container {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-section h1 {
+            font-size: 2.5em;
+            color: #007bff;
+        }
+
+        .table {
+            margin: 0;
+        }
+
+        .table th, .table td {
+            vertical-align: middle;
+        }
+
+        .badge {
+            font-size: 0.9em;
+            padding: 6px 12px;
+            border-radius: 20px;
+        }
+
+        .btn {
+            transition: all 0.3s ease-in-out;
+        }
+
+        .btn-outline-secondary:hover {
+            background-color: #6c757d;
+            color: #fff;
+            transform: scale(1.05);
+        }
+
+        /* Optional Hover Effects */
+        .table-hover tbody tr:hover {
+            background-color: #e9ecef;
+            transition: background-color 0.3s;
+        }
+    </style>
+}

@@ -1,0 +1,120 @@
+﻿@model DBM3.Models.Learner
+
+@{
+    ViewData["Title"] = "Edit Profile";
+}
+
+<div class="container d-flex align-items-center justify-content-center vh-100">
+    <div class="card shadow-lg p-4 rounded profile-edit-card" style="max-width: 600px; width: 100%;">
+        <div class="card-header bg-primary text-white text-center">
+            <h2>Edit Your Profile</h2>
+        </div>
+        <div class="card-body">
+            <form asp-action="EditProfile" method="post">
+                <input type="hidden" asp-for="LearnerId" />
+
+                <!-- First Name -->
+                <div class="form-group mb-3">
+                    <label asp-for="FirstName" class="form-label fw-bold">First Name</label>
+                    <input asp-for="FirstName" class="form-control" placeholder="Enter your first name" required />
+                </div>
+
+                <!-- Last Name -->
+                <div class="form-group mb-3">
+                    <label asp-for="LastName" class="form-label fw-bold">Last Name</label>
+                    <input asp-for="LastName" class="form-control" placeholder="Enter your last name" required />
+                </div>
+
+                <!-- Email -->
+                <div class="form-group mb-3">
+                    <label asp-for="Email" class="form-label fw-bold">Email</label>
+                    <input asp-for="Email" type="email" class="form-control" placeholder="Enter your email" required />
+                </div>
+
+                <!-- Country -->
+                <div class="form-group mb-3">
+                    <label asp-for="Country" class="form-label fw-bold">Country</label>
+                    <input asp-for="Country" class="form-control" placeholder="Enter your country" />
+                </div>
+
+                <!-- Cultural Background -->
+                <div class="form-group mb-3">
+                    <label asp-for="CulturalBackground" class="form-label fw-bold">Cultural Background</label>
+                    <input asp-for="CulturalBackground" class="form-control" placeholder="Enter your cultural background" />
+                </div>
+
+                <!-- Gender -->
+                <div class="form-group mb-3">
+                    <label asp-for="Gender" class="form-label fw-bold">Gender</label>
+                    <select asp-for="Gender" class="form-control">
+                        <option value="">Select Gender</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                    </select>
+                </div>
+
+                <!-- Birth Date -->
+                <div class="form-group mb-4">
+                    <label asp-for="BirthDate" class="form-label fw-bold">Date of Birth</label>
+                    <input asp-for="BirthDate" type="date" class="form-control" />
+                </div>
+
+                <!-- Buttons -->
+                <div class="text-center">
+                    <button type="submit" class="btn btn-success shadow-sm w-100 mb-2">Save Changes</button>
+                    <a asp-action="Profile" asp-route-id="@Model.LearnerId" class="btn btn-outline-secondary shadow-sm w-100">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    <style>
+        body {
+            background: linear-gradient(to bottom, #ffffff, #f0f8ff);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .profile-edit-card {
+            border: none;
+            background-color: #f9f9f9;
+        }
+
+        .card-header h2 {
+            margin: 0;
+            font-weight: bold;
+        }
+
+        .form-label {
+            font-size: 1em;
+            color: #555;
+        }
+
+        .btn {
+            font-size: 1em;
+            border-radius: 30px;
+        }
+
+        .btn-success {
+            background-color: #28a745;
+            border: none;
+        }
+
+            .btn-success:hover {
+                background-color: #218838;
+                transform: scale(1.02);
+            }
+
+        .btn-outline-secondary {
+            border-color: #6c757d;
+            color: #6c757d;
+        }
+
+            .btn-outline-secondary:hover {
+                background-color: #6c757d;
+                color: #fff;
+                transform: scale(1.02);
+            }
+    </style>
+}

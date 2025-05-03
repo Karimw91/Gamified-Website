@@ -1,0 +1,46 @@
+﻿@{
+    ViewData["Title"] = "Login";
+}
+
+<div class="container d-flex align-items-center justify-content-center vh-100">
+    <div class="card shadow-lg p-4 rounded login-card" style="width: 400px;">
+        <div class="card-header bg-primary text-white text-center">
+            <h2>Login</h2>
+        </div>
+        <div class="card-body">
+            <form asp-action="Login" asp-controller="Accounts" method="post">
+                <div class="form-group mb-3">
+                    <label for="email" class="form-label fw-bold">Email</label>
+                    <input type="email" class="form-control" name="email" placeholder="Enter your email" required>
+                </div>
+                <div class="form-group mb-3">
+                    <label for="password" class="form-label fw-bold">Password</label>
+                    <input type="password" class="form-control" name="password" placeholder="Enter your password" required>
+                </div>
+                <button type="submit" class="btn btn-primary w-100 shadow-sm">Login</button>
+                <p class="text-center mt-3">
+                    Don't have an account? <a asp-controller="Accounts" asp-action="Register" class="text-primary fw-bold">Register here</a>
+                </p>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    <style>
+        body {
+            background: linear-gradient(to bottom, #ffffff, #e9f7ff);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .login-card {
+            border: none;
+            background-color: #f9f9f9;
+        }
+
+        .card-header h2 {
+            margin: 0;
+            font-weight: bold;
+        }
+    </style>
+}

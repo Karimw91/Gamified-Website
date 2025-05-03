@@ -1,0 +1,33 @@
+﻿@model DBM3.Models.LearningPathViewModel
+
+@{
+    ViewData["Title"] = "Create Learning Path";
+}
+
+<h1>Create a Learning Path</h1>
+
+<form asp-action="CreateLearningPath" method="post">
+    <input type="hidden" name="InstructorId" value="@ViewBag.InstructorId" />
+    <div class="form-group">
+        <label for="LearnerId">Select Learner</label>
+        <select name="LearnerId" class="form-control" required>
+            <option value="">-- Select Learner --</option>
+            @foreach (var learner in ViewBag.Learners as List<DBM3.Models.Learner>)
+            {
+                <option value="@learner.LearnerId">@learner.FirstName @learner.LastName</option>
+            }
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="CustomContent">Custom Content</label>
+        <input type="text" name="CustomContent" class="form-control" required />
+    </div>
+
+    <div class="form-group">
+        <label for="AdaptiveRules">Adaptive Rules</label>
+        <input type="text" name="AdaptiveRules" class="form-control" required />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Create Path</button>
+</form>

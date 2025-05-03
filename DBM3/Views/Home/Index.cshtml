@@ -1,0 +1,92 @@
+﻿@{
+    ViewData["Title"] = "Home";
+}
+
+<div class="home-container">
+    <div class="welcome-section">
+        <h1 class="welcome-title">Welcome to your learning portal</h1>
+        <p class="welcome-text">Your gateway to learning, connecting, and achieving goals. Get started or log in to explore more!</p>
+    </div>
+
+    <!-- Navigation Buttons -->
+    <div class="action-buttons">
+        <a asp-controller="Accounts" asp-action="Register" class="btn btn-primary shadow-lg">Register</a>
+        <a asp-controller="Accounts" asp-action="Login" class="btn btn-outline-secondary shadow-lg">Login</a>
+    </div>
+</div>
+
+@section Styles {
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to bottom, #ffffff, #e9f7ff);
+            color: #333;
+        }
+
+        .home-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            text-align: center;
+        }
+
+        .welcome-section {
+            margin-bottom: 30px;
+        }
+
+        .welcome-title {
+            font-size: 3em;
+            font-weight: bold;
+            color: #0056b3;
+            margin-bottom: 10px;
+        }
+
+        .welcome-text {
+            font-size: 1.2em;
+            color: #555;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .action-buttons a {
+            text-decoration: none;
+            margin: 10px;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 1.1em;
+            transition: transform 0.2s, background-color 0.3s, color 0.3s;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            color: white;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+
+        .btn-outline-secondary {
+            border: 2px solid #007bff;
+            color: #007bff;
+            background-color: transparent;
+        }
+
+        .btn-outline-secondary:hover {
+            background-color: #007bff;
+            color: white;
+            transform: scale(1.05);
+        }
+
+        /* Optional: Add shadow for buttons */
+        .shadow-lg {
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+}

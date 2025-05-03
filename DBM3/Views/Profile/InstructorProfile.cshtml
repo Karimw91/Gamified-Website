@@ -1,0 +1,11 @@
+﻿@model DBM3.Models.Instructor
+
+<h2>Instructor Profile</h2>
+
+<div>
+    <p><strong>InstructorID:</strong>@Model.InstructorId</p>
+    <p><strong>Name:</strong> @Model.Name</p>
+    <p><strong>Email:</strong> @Model.Email</p>
+</div>
+
+<a asp-action="EditProfile" asp-route-id="@Model.InstructorId" asp-route-role="Instructor">Edit Profile</a>

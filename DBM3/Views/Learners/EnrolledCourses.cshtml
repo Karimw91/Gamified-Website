@@ -1,0 +1,42 @@
+﻿@model IEnumerable<dynamic>
+@{
+    ViewData["Title"] = "Enrolled Courses";
+}
+
+<h2>Enrolled Courses</h2>
+
+@if (Model == null || !Model.Any())
+{
+    <p>No courses are currently enrolled.</p>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Course Title</th>
+                <th>Status</th>
+                <th>Enrollment Date</th>
+                <th>Completion Date</th>
+                <th>Actions</th> <!-- New column for the button -->
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var course in Model)
+            {
+                <tr>
+                    <td>@course.CourseTitle</td>
+                    <td>@course.Status</td>
+                    <td>@(course.EnrollmentDate?.ToString("yyyy-MM-dd") ?? "N/A")</td>
+                    <td>@(course.CompletionDate?.ToString("yyyy-MM-dd") ?? "N/A")</td>
+                    <td>
+                        <a asp-action="Modules" asp-controller="Learners" asp-route-courseId="@course.CourseId" class="btn btn-primary btn-sm">
+                            View Modules
+                        </a>
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+}
